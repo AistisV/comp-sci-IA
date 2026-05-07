@@ -1,0 +1,352 @@
+[
+  {
+    "id": "A.1.Vectors",
+    "name": "Scalars & Vectors",
+    "parent_ids": [],
+    "questions": [
+      {
+        "text": "A triathlete swims 1.5 km North and then 0.5 km East. What is the magnitude of the resultant displacement?",
+        "options": [
+          "2.00 km",
+          "1.58 km",
+          "1.00 km",
+          "1.41 km"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "Which list contains only vector quantities?",
+        "options": [
+          "Mass, Velocity, Time",
+          "Displacement, Acceleration, Force",
+          "Speed, Energy, Momentum",
+          "Temperature, Distance, Power"
+        ],
+        "correct_index": 1
+      }
+    ]
+  },
+  {
+    "id": "A.1.Disp_Vel",
+    "name": "Displacement & Velocity",
+    "parent_ids": [
+      "A.1.Vectors"
+    ],
+    "questions": [
+      {
+        "text": "A robot moves 10m forward, stops for 2s, then returns 10m to the start in 3s. Total time is 10s. What is the average velocity?",
+        "options": [
+          "2.0 m/s",
+          "0.0 m/s",
+          "1.0 m/s",
+          "2.5 m/s"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "An object travels in a circle of radius r at constant speed v. What is the velocity after half a revolution?",
+        "options": [
+          "v",
+          "-v",
+          "0",
+          "2v"
+        ],
+        "correct_index": 1
+      }
+    ]
+  },
+  {
+    "id": "A.1.Accel",
+    "name": "Acceleration",
+    "parent_ids": [
+      "A.1.Disp_Vel"
+    ],
+    "questions": [
+      {
+        "text": "A drone changes velocity from 5 m/s North to 5 m/s South in 2 seconds. What is the magnitude of acceleration?",
+        "options": [
+          "0 m/s²",
+          "5 m/s²",
+          "2.5 m/s²",
+          "10 m/s²"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "Which statement defines acceleration?",
+        "options": [
+          "Rate of change of speed",
+          "Rate of change of displacement",
+          "Rate of change of velocity",
+          "Force per unit mass"
+        ],
+        "correct_index": 2
+      }
+    ]
+  },
+  {
+    "id": "A.1.Graphs",
+    "name": "Kinematic Graphs",
+    "parent_ids": [
+      "A.1.Accel"
+    ],
+    "questions": [
+      {
+        "text": "The area under a velocity-time graph represents:",
+        "options": [
+          "Acceleration",
+          "Change in Displacement",
+          "Instantaneous Force",
+          "Average Speed"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "On a displacement-time graph, a straight line with a negative gradient indicates:",
+        "options": [
+          "Constant negative acceleration",
+          "Constant velocity in the negative direction",
+          "Object is stationary",
+          "Decelerating motion"
+        ],
+        "correct_index": 1
+      }
+    ]
+  },
+  {
+    "id": "A.1.SUVAT",
+    "name": "Equations of Motion (SUVAT)",
+    "parent_ids": [
+      "A.1.Accel"
+    ],
+    "questions": [
+      {
+        "text": "A cyclist accelerates from 5 m/s at 2 m/s² for 4 seconds. What is the final velocity?",
+        "options": [
+          "13 m/s",
+          "8 m/s",
+          "11 m/s",
+          "20 m/s"
+        ],
+        "correct_index": 0
+      },
+      {
+        "text": "A stone is dropped (u=0). How far does it fall in 3 seconds? (g=9.8 m/s²)",
+        "options": [
+          "29.4 m",
+          "44.1 m",
+          "88.2 m",
+          "14.7 m"
+        ],
+        "correct_index": 1
+      }
+    ]
+  },
+  {
+    "id": "A.1.Projectile",
+    "name": "Projectile Motion",
+    "parent_ids": [
+      "A.1.SUVAT",
+      "A.1.Vectors"
+    ],
+    "questions": [
+      {
+        "text": "A ball is kicked at 20 m/s at an angle of 30° to the horizontal. What is the vertical component of the initial velocity?",
+        "options": [
+          "17.3 m/s",
+          "10.0 m/s",
+          "20.0 m/s",
+          "8.5 m/s"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "Ignoring air resistance, which quantity remains constant during projectile motion?",
+        "options": [
+          "Vertical Velocity",
+          "Horizontal Velocity",
+          "Vertical Displacement",
+          "Instantaneous Speed"
+        ],
+        "correct_index": 1
+      }
+    ]
+  },
+  {
+    "id": "A.2.Newton_Laws",
+    "name": "Newton's Laws",
+    "parent_ids": [
+      "A.1.Accel"
+    ],
+    "questions": [
+      {
+        "text": "A 10 kg robot requires a net force of 30 N to accelerate. What is the acceleration?",
+        "options": [
+          "300 m/s²",
+          "0.3 m/s²",
+          "3.0 m/s²",
+          "20 m/s²"
+        ],
+        "correct_index": 2
+      },
+      {
+        "text": "An elevator of mass 500 kg moves upward at a constant velocity. What is the tension in the cable? (g=9.8 m/s²)",
+        "options": [
+          "5400 N",
+          "4900 N",
+          "0 N",
+          "4400 N"
+        ],
+        "correct_index": 1
+      }
+    ]
+  },
+  {
+    "id": "A.2.Momentum",
+    "name": "Linear Momentum",
+    "parent_ids": [
+      "A.2.Newton_Laws",
+      "A.1.Disp_Vel"
+    ],
+    "questions": [
+      {
+        "text": "Which object has the greatest momentum?",
+        "options": [
+          "2000kg truck at 1 m/s",
+          "1000kg car at 5 m/s",
+          "50kg human at 10 m/s",
+          "0.1kg bullet at 500 m/s"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "Momentum is a vector quantity. Its direction is:",
+        "options": [
+          "Always the same as displacement",
+          "Always the same as velocity",
+          "Always the same as force",
+          "Independent of motion"
+        ],
+        "correct_index": 1
+      }
+    ]
+  },
+  {
+    "id": "A.2.Impulse",
+    "name": "Impulse",
+    "parent_ids": [
+      "A.2.Momentum"
+    ],
+    "questions": [
+      {
+        "text": "A force of 10 N acts on a body for 0.5 s. What is the change in momentum?",
+        "options": [
+          "20 kg m/s",
+          "5 kg m/s",
+          "0.05 kg m/s",
+          "10 kg m/s"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "On a Force-Time graph, the impulse is represented by:",
+        "options": [
+          "The gradient of the line",
+          "The area under the curve",
+          "The y-intercept",
+          "The x-intercept"
+        ],
+        "correct_index": 1
+      }
+    ]
+  },
+  {
+    "id": "A.3.Work",
+    "name": "Work Done",
+    "parent_ids": [
+      "A.2.Newton_Laws",
+      "A.1.Vectors"
+    ],
+    "questions": [
+      {
+        "text": "A force of 50 N pulls a box 10 m along a floor. The force is applied at 60° to the horizontal. Work done is:",
+        "options": [
+          "500 J",
+          "250 J",
+          "433 J",
+          "0 J"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "No work is done by a force on an object if:",
+        "options": [
+          "The force is constant",
+          "The object accelerates",
+          "The force is perpendicular to the displacement",
+          "The object moves in a straight line"
+        ],
+        "correct_index": 2
+      }
+    ]
+  },
+  {
+    "id": "A.3.KE",
+    "name": "Kinetic Energy",
+    "parent_ids": [
+      "A.1.Disp_Vel"
+    ],
+    "questions": [
+      {
+        "text": "If the velocity of a car doubles, its Kinetic Energy:",
+        "options": [
+          "Doubles",
+          "Quadruples",
+          "Halves",
+          "Remains constant"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "A 2 kg mass moves at 3 m/s. Calculate KE.",
+        "options": [
+          "6 J",
+          "9 J",
+          "3 J",
+          "18 J"
+        ],
+        "correct_index": 1
+      }
+    ]
+  },
+  {
+    "id": "A.3.Power",
+    "name": "Power",
+    "parent_ids": [
+      "A.3.Work",
+      "A.1.Disp_Vel"
+    ],
+    "questions": [
+      {
+        "text": "A motor lifts a 100 kg load vertically at a constant speed of 2 m/s. (g=9.8). Power output is:",
+        "options": [
+          "200 W",
+          "1960 W",
+          "980 W",
+          "490 W"
+        ],
+        "correct_index": 1
+      },
+      {
+        "text": "Which unit is equivalent to the Watt?",
+        "options": [
+          "Joule second",
+          "Joule per second",
+          "Newton meter",
+          "Kilogram meter per second"
+        ],
+        "correct_index": 1
+      }
+    ]
+  }
+]
