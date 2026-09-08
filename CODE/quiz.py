@@ -1,97 +1,88 @@
 """
-quiz.py
--------
-Quiz session management for the IB Physics Knowledge Navigator.
+quiz.py — Module 3: Quiz Logic (QuizManager)
 
-A QuizSession encapsulates one quiz attempt on a single topic:
-  - picks a random subset of questions from the database (SC5)
-  - records each answer submitted
-  - determines pass / fail when all questions are answered
-
-Pass policy: the student must answer ALL questions correctly.
+Handles a single quiz attempt (randomised question order, scoring) and
+the recovery stack used to walk the user back down the chain of failed
+prerequisites (Figure 6, Figure 7).
 """
 
+from __future__ import annotations
+
 import random
-from database import get_questions_for_topic
-
-QUESTIONS_PER_QUIZ = 2   # number of questions drawn per attempt
 
 
-class QuizSession:
+class QuizManager:
     """
-    Manages a single quiz attempt.
-
-    Parameters
-    ----------
-    topic_id   : str   database ID of the topic being quizzed
-    topic_name : str   human-readable name (for display only)
+    current_questions : the (shuffled) list of question dicts for the
+                         topic currently being quizzed
+    score             : number of correct answers so far this attempt
+    recovery_stack    : LIFO stack of topic_ids the user must re-pass,
+                         pushed onto during knowledge-gap diagnosis and
+                         popped as each recovery quiz is completed
+                         (Figure 7's "Path Recovery Stack", SC7)
     """
 
-    def __init__(self, topic_id: str, topic_name: str) -> None:
-        self.topic_id   = topic_id
-        self.topic_name = topic_name
+    def __init__(self, db):
+        self.db = db
+        self.current_questions: list[dict] = []
+        self.current_topic_id: str | None = None
+        self._answers: list[bool] = []
+        self.score = 0
+        self.recovery_stack: list[str] = []
 
-        # Randomly sample questions for this attempt (SC5).
-        all_questions = get_questions_for_topic(topic_id)
-        n = min(QUESTIONS_PER_QUIZ, len(all_questions))
-        self.questions: list[dict] = random.sample(all_questions, n)
+    # ------------------------------------------------------------------
+    # SC5: randomised question picker
+    # ------------------------------------------------------------------
 
-        self.current_index: int  = 0
-        self.correct_count: int  = 0
-        # Each entry: (selected_index, correct_index, is_correct)
-        self.answers: list[tuple[int, int, bool]] = []
+    def initialize_quiz(self, topic_id: str) -> list[dict]:
+        """Loads and shuffles this topic's questions, resets the score."""
+        self.current_topic_id = topic_id
+        questions = list(self.db.get_questions(topic_id))
+        random.shuffle(questions)
+        for q in questions:
+            # Also shuffle each question's own option order so repeat
+            # attempts don't always show the answer in the same slot.
+            correct_text = q["options"][q["correct_index"]]
+            random.shuffle(q["options"])
+            q["correct_index"] = q["options"].index(correct_text)
+        self.current_questions = questions
+        self._answers = []
+        self.score = 0
+        return self.current_questions
 
-    # ── Question access ────────────────────────────────────────────────────────
+    def submit_answer(self, q_index: int, chosen_index: int) -> bool:
+        """Records whether the answer to question q_index was correct."""
+        correct = chosen_index == self.current_questions[q_index]["correct_index"]
+        self._answers.append(correct)
+        if correct:
+            self.score += 1
+        return correct
 
-    def current_question(self) -> dict | None:
-        """Return the current question dict, or None if the quiz is finished."""
-        if self.current_index < len(self.questions):
-            return self.questions[self.current_index]
+    def evaluate_attempt(self) -> bool:
+        """
+        Returns True (pass) if the user scored at least half marks,
+        False otherwise. A quiz is only "complete" once every question
+        has been answered (Figure 6: 'More Questions Remaining?').
+        """
+        total = len(self.current_questions)
+        return total > 0 and self.score >= (total / 2)
+
+    @property
+    def total_questions(self) -> int:
+        return len(self.current_questions)
+
+    # ------------------------------------------------------------------
+    # SC7: recovery stack (LIFO)
+    # ------------------------------------------------------------------
+
+    def push_recovery(self, topic_id: str) -> None:
+        self.recovery_stack.append(topic_id)
+
+    def pop_next_recovery_topic(self) -> str | None:
+        """Pops and returns the next topic to re-test, or None if empty."""
+        if self.recovery_stack:
+            return self.recovery_stack.pop()
         return None
 
-    def progress_label(self) -> str:
-        """Return a human-readable progress string, e.g. 'Question 1 of 2'."""
-        return f"Question {self.current_index + 1} of {len(self.questions)}"
-
-    # ── Answer submission ──────────────────────────────────────────────────────
-
-    def submit_answer(self, selected_index: int) -> bool:
-        """
-        Record the student's answer for the current question.
-
-        Parameters
-        ----------
-        selected_index : int  index of the chosen option (0-based)
-
-        Returns
-        -------
-        bool  True if the answer was correct.
-        """
-        q = self.current_question()
-        if q is None:
-            return False
-
-        is_correct = (selected_index == q["correct_index"])
-        if is_correct:
-            self.correct_count += 1
-
-        self.answers.append((selected_index, q["correct_index"], is_correct))
-        self.current_index += 1
-        return is_correct
-
-    # ── Session state ──────────────────────────────────────────────────────────
-
-    def is_finished(self) -> bool:
-        """Return True when all questions have been answered."""
-        return self.current_index >= len(self.questions)
-
-    def passed(self) -> bool:
-        """
-        Return True if the student answered every question correctly.
-        Only meaningful after is_finished() returns True.
-        """
-        return self.is_finished() and (self.correct_count == len(self.questions))
-
-    def score(self) -> tuple[int, int]:
-        """Return (correct_count, total_questions)."""
-        return self.correct_count, len(self.questions)
+    def recovery_is_empty(self) -> bool:
+        return len(self.recovery_stack) == 0
